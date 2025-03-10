@@ -81,3 +81,8 @@ public class Main {
         System.out.println("Average fuel consumption: " + car.getAverageFuelConsumption() + " liters/100 km");
     }
 }
+
+// CarInterface removed and used Main instead
+// Remade the whole project to use the CarCatalog class
+// removed interface and vehicle management system
+//removed GearBox class and removed acceleration and deceleration methods
