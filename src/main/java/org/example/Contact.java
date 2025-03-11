@@ -1,7 +1,7 @@
 package org.example;
 
 public class Contact {
-    private final String id;
+    private final String id; //id is not used in the code
     private final String phoneNumber;
     private final String firstName;
     private final String lastName;
