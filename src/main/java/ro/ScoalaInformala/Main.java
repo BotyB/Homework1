@@ -43,28 +43,19 @@ public class Main {
     }
 
     private static Car createCar(String brand, String model, int tireSize, String chassisNumber) {
-        switch (brand.toLowerCase()) {
-            case "dacia":
-                switch (model.toLowerCase()) {
-                    case "logan":
-                        return new Logan(tireSize, chassisNumber);
-                    case "sandero":
-                        return new Sandero(tireSize, chassisNumber);
-                    default:
-                        return null;
-                }
-            case "volkswagen":
-                switch (model.toLowerCase()) {
-                    case "vwgolf":
-                        return new VWGolf(tireSize, chassisNumber);
-                    case "vwpassat":
-                        return new VWPassat(tireSize, chassisNumber);
-                    default:
-                        return null;
-                }
-            default:
-                return null;
-        }
+        return switch (brand.toLowerCase()) {
+            case "dacia" -> switch (model.toLowerCase()) {
+                case "logan" -> new Logan(tireSize, chassisNumber);
+                case "sandero" -> new Sandero(tireSize, chassisNumber);
+                default -> null;
+            };
+            case "volkswagen" -> switch (model.toLowerCase()) {
+                case "vwgolf" -> new VWGolf(tireSize, chassisNumber);
+                case "vwpassat" -> new VWPassat(tireSize, chassisNumber);
+                default -> null;
+            };
+            default -> null;
+        };
     }
 
     private static void simulateDriving(Car car) {

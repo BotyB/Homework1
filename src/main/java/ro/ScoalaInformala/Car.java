@@ -60,7 +60,15 @@ public abstract class Car extends Vehicle {
 
     protected final double calculateFuelConsumption() {
         double tireImpact = 1.0 + (tireSize - 15) * 0.05;
-        double gearImpact = 1.0 - (currentGear - 1) * 0.10;
+        double gearImpact = switch (currentGear) {
+            case 1 -> 1.3;
+            case 2 -> 1.15;
+            case 3 -> 1.0;
+            case 4 -> 0.97;
+            case 5 -> 0.95;
+            case 6 -> 0.93;
+            default -> 1.0;
+        };
         return consumptionPer100Km * tireImpact * gearImpact;
     }
 
