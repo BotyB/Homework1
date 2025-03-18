@@ -6,13 +6,14 @@ public abstract class Car extends Vehicle {
     private final int gears;
     private final double consumptionPer100Km;
     private double availableFuel;
-    private int tireSize;
+    private final int tireSize;
     private final String chassisNumber;
     private int currentGear;
     private double totalDistance;
     private double totalFuelConsumed;
 
-    public Car(String brand, String model, double fuelTankSize, String fuelType, double consumptionPer100Km, int tireSize, String chassisNumber) {
+    public Car(String brand, String model, double fuelTankSize, String fuelType,
+               double consumptionPer100Km, int tireSize, String chassisNumber) {
         super(model, brand);
         this.fuelTankSize = fuelTankSize;
         this.fuelType = fuelType;
@@ -26,36 +27,22 @@ public abstract class Car extends Vehicle {
         this.totalFuelConsumed = 0.0;
     }
 
-    public double getAvailableFuel() {
-        return availableFuel;
+    @Override
+    public void start() {
+        resetConsumptionStats();
+        System.out.println("Car started...");
     }
 
-    public int getTireSize() {
-        return tireSize;
+    @Override
+    public void stop() {
+        System.out.println("Car stopped...");
     }
 
-    public void setTireSize(int tireSize) {
-        this.tireSize = tireSize;
-    }
-
-    public String getChassisNumber() {
-        return chassisNumber;
-    }
-
-    public int getCurrentGear() {
-        return currentGear;
-    }
-
-    public void setCurrentGear(int currentGear) {
-        this.currentGear = currentGear;
-    }
-
-    public double getTotalDistance() {
-        return totalDistance;
-    }
-
-    public double getTotalFuelConsumed() {
-        return totalFuelConsumed;
+    private void resetConsumptionStats() {
+        totalDistance = 0.0;
+        totalFuelConsumed = 0.0;
+        availableFuel = fuelTankSize;
+        currentGear = 1;
     }
 
     public final void shiftGear(int gear) {
@@ -72,28 +59,59 @@ public abstract class Car extends Vehicle {
     }
 
     protected final double calculateFuelConsumption() {
-        double tireImpact = 1.0 + (tireSize - 15) * 0.02;
-        double gearImpact = 1.0 - (currentGear - 1) * 0.03;
+        double tireImpact = 1.0 + (tireSize - 15) * 0.05;
+        double gearImpact = switch (currentGear) {
+            case 1 -> 1.3;
+            case 2 -> 1.15;
+            case 3 -> 1.0;
+            case 4 -> 0.97;
+            case 5 -> 0.95;
+            case 6 -> 0.93;
+            default -> 1.0;
+        };
         return consumptionPer100Km * tireImpact * gearImpact;
     }
 
     @Override
     public void drive(double distance) {
-        double fuelConsumed = (calculateFuelConsumption() / 100) * distance;
-        if (fuelConsumed <= availableFuel) {
-            availableFuel -= fuelConsumed;
+        if (currentGear == 0) {
+            System.out.println("Cannot drive: Car is in neutral.");
+            return;
+        }
+
+        double fuelNeeded = (calculateFuelConsumption() / 100) * distance;
+        if (fuelNeeded <= availableFuel) {
+            availableFuel -= fuelNeeded;
             totalDistance += distance;
-            totalFuelConsumed += fuelConsumed;
-            System.out.printf("Driving %.2f km in gear %d. Fuel consumed: %.2f liters.%n", distance, currentGear, fuelConsumed);
+            totalFuelConsumed += fuelNeeded;
+            System.out.printf("Driven %.2f km in gear %d. Fuel used: %.2f liters.%n",
+                    distance, currentGear, fuelNeeded);
         } else {
             System.out.println("Not enough fuel to drive " + distance + " km.");
         }
     }
 
+    public double getAvailableFuel() {
+        return availableFuel;
+    }
+
     public double getAverageFuelConsumption() {
-        if (totalDistance == 0) {
-            return 0.0;
-        }
-        return (totalFuelConsumed / totalDistance) * 100;
+        return totalDistance == 0 ? 0 : (totalFuelConsumed / totalDistance) * 100;
+    }
+
+    public String getFuelType() {
+        return fuelType;
+    }
+
+    public String getChassisNumber() {
+        return chassisNumber;
+    }
+
+    public double getTotalDistance() {
+        return totalDistance;
+    }
+
+    public double getTotalFuelConsumed() {
+        return totalFuelConsumed;
     }
 }

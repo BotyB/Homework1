@@ -2,7 +2,7 @@ package ro.ScoalaInformala;
 
 public class VWGolf extends Volkswagen{
     public VWGolf(int tireSize, String chassisNumber) {
-        super(tireSize, chassisNumber);
+        super("VWGolf", 50.0, "Petrol", 5.6, tireSize, chassisNumber);
     }
 
     @Override
