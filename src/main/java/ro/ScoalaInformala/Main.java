@@ -28,14 +28,14 @@ public class Main {
             return;
         }
 
-        catalog.addCar(car);
+        catalog.addCar(car); // Add the car to the catalog
 
         System.out.printf("\nStarting fuel level: %.2f liters%n", car.getAvailableFuel());
 
-        simulateDriving(car);
+        simulateDriving(car); // Simulate driving
 
         System.out.println("\nFinal Stats:");
-        System.out.printf("Total distance: %.2f km%n", car.getTotalDistance());
+        System.out.printf("Total distance: %.2f km%n", car.getTotalDistance()); // Print the final stats
         System.out.printf("Total fuel used: %.2f liters%n", car.getTotalFuelConsumed());
         System.out.printf("Available fuel: %.2f liters%n", car.getAvailableFuel());
         System.out.printf("Average consumption: %.2f liters/100 km%n",
@@ -70,8 +70,8 @@ public class Main {
         car.drive(30.0);
         car.shiftGear(5);
         car.drive(50.0);
-        car.shiftGear(6);
-        car.drive(100.0);
+        car.shiftGear(6);           //Shift to gear 6 then accelerate to 100 km/h
+        car.drive(100.0);   //Removed accelerate() and decelerate() methods and replaced them with drive() method
         car.shiftGear(5);
         car.drive(20.0);
         car.shiftGear(4);
