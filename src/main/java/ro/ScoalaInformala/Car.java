@@ -68,7 +68,7 @@ public abstract class Car extends Vehicle {
             case 5 -> 0.95;
             case 6 -> 0.93;
             default -> 1.0;
-        };
+        };                                      //Changed the way fuel is calculated so it has a more realistic impact
         return consumptionPer100Km * tireImpact * gearImpact;
     }
 
