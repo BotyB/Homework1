@@ -1,8 +1,10 @@
 package ro.ScoalaInformala;
 
 public class Volkswagen extends Car {
-    public Volkswagen(int tireSize, String chassisNumber) {
-        super("Volkswagen", "Generic Model", 55.0, "Diesel", 4.5, tireSize, chassisNumber);
+    public Volkswagen(String model, double fuelTankSize, String fuelType,
+                      double consumptionPer100Km, int tireSize, String chassisNumber) {
+        super("Volkswagen", model, fuelTankSize, fuelType, consumptionPer100Km,
+                tireSize, chassisNumber);
     }
 
     @Override

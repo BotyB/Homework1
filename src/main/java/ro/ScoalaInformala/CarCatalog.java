@@ -8,12 +8,4 @@ public class CarCatalog {
     public void addCar(Car car) {
         cars.add(car);
     }
-    public Car getCar(String chassisNumber) {
-        for (Car car : cars) {
-            if (car.getChassisNumber().equals(chassisNumber)) {
-                return car;
-            }
-        }
-        return null;
-    }
 }
